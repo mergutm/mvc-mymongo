@@ -1,3 +1,39 @@
+# Docker comandos
+
+Levantar el contenedor de mongo (-d = detached, sin bloquear la terminal)
+```bash
+docker compose up 
+docker compose up -d
+```
+
+Para ver logs
+```bash
+docker logs <contenedor>
+```
+
+
+```bash
+docker exec -it <id-contenedor> <comando>
+docker exec -it mongo-mvc bash
+docker exec -it mongo-mvc mongosh --username root --password root
+```
+
+```bash
+docker exec -it mongo-mvc bash
+mongosh --username root --password root
+```
+## En mongo
+
+Dentro del contenedor de mongo usando mongosh:
+
+```mongodb
+use opiniones
+show collections
+db.opiniones.find()
+```
+
+
+
 # MVC
 
 La arquitectura MVC (Modelo–Vista–Controlador) separa las responsabilidades en tres partes principales dentro de una aplicación:
