@@ -3,3 +3,5 @@ mongo/data/*
 api/node_modules/*
 .env
 *.zip
+.git
+.gitignore

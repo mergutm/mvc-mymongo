@@ -1,26 +1,56 @@
 import express from "express";
 import cors from "cors";
-import bodyParser from "body-parser";
-import opinionRoutes from "./routes/opinionRoutes.js";
 import mongoose from "mongoose";
-import mysql from "mysql2/promise";
+import dotenv from "dotenv";
+import { connectMongo, mysqlPool, testMySQLConnection } from "./config/db.js";
+//import opinionRoutes from "./routes/opinionRoutes.js"; // habilítalo cuando esté listo
+
+dotenv.config(); // Cargar variables de entorno
 
 const app = express();
+
+// Middlewares
+
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json()); // para entender peticiones JSON
 
-// Conexión MongoDB
-const mongoUri = process.env.MONGO_URI;
-mongoose.connect(mongoUri);
+// Conexiones a bases de datos 
+await connectMongo();
+await testMySQLConnection();
 
-// Conexión MySQL
-export const mysqlConn = await mysql.createConnection({
-    host: process.env.MYSQL_HOST,
-    user: process.env.MYSQL_USER,
-    password: process.env.MYSQL_PASSWORD,
-    database: process.env.MYSQL_DATABASE,
+// Rutas
+app.get("/", (req, res) => {
+    res.send(`
+    <h2>🚀 API corriendo correctamente</h2>
+    <p>Entorno: <b>${process.env.NODE_ENV || "development"}</b></p>
+    <p>Puerto: <b>${process.env.PORT}</b></p>`);
 });
 
-app.use("/opiniones", opinionRoutes);
+// Endpoint de salud (para monitoreo en Docker, Render, etc.)
+app.get("/health", async (req, res) => {
+    const mysqlOk = await mysqlPool
+        .query("SELECT 1")
+        .then(() => true)
+        .catch(() => false);
+    const mongoOk = mongoose.connection.readyState === 1;
 
-app.listen(3000, () => console.log("API corriendo en puerto 3000"));
+    res.json({
+        status: mysqlOk && mongoOk ? "ok" : "error",
+        services: {
+            mongo: mongoOk ? "connected" : "disconnected",
+            mysql: mysqlOk ? "connected" : "disconnected",
+        },
+        timestamp: new Date().toISOString(),
+    });
+});
+
+// Rutas 
+//app.use("/opiniones", opinionRoutes);
+
+// 🚀 Inicio del servidor
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Servidor escuchando en puerto ${PORT}`);
+    console.log(`http://localhost:${PORT}/`);
+});
+

@@ -12,7 +12,7 @@ services:
     networks:
       - services_net
     ports:
-      - "3306:3306"
+      - "3316:3306"
 
   mongodb:
     image: mongo:7
@@ -39,12 +39,15 @@ services:
       MYSQL_USER: root
       MYSQL_PASSWORD: root
       MYSQL_DATABASE: opiniones
-      MONGO_URI: mongodb://mongo:27017/opiniones
+      MONGO_URI: mongodb://mongodb:27017/opiniones
     ports:
       - "3000:3000"
-    volumes:
-      - ./api:/usr/src/app
-      - ./api/node_modules:/usr/src/app/node_modules
+    volumes:      
+      - ./api:/usr/src/app  # Mounts the API source code
+      # - ./api/node_modules:/usr/src/app/node_modules
+      - /usr/src/app/node_modules  # Prevents overwriting node_modules
+
+    command: ["npm", "run", "dev"]
     networks:
       - services_net
 
