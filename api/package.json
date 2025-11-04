@@ -1,0 +1,16 @@
+{
+    "name": "api-opiniones",
+    "version": "1.0.0",
+    "main": "server.js",
+    "type": "module",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "dependencies": {
+        "express": "^4.19.2",
+        "mysql2": "^3.10.1",
+        "mongoose": "^8.6.0",
+        "cors": "^2.8.5",
+        "body-parser": "^1.20.2"
+    }
+}

@@ -1,0 +1,5 @@
+mysql/data/*
+mongo/data/*
+api/node_modules/*
+.env
+*.zip
