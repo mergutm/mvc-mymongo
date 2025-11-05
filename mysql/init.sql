@@ -4,7 +4,7 @@ CREATE TABLE opinion (
     producto VARCHAR(100),
     texto TEXT,
     fecha DATETIME DEFAULT CURRENT_TIMESTAMP
-);
+)  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 INSERT INTO opinion (usuario, producto, texto)
 VALUES ('@techover', 'Laptop Lenovo', 'Excelente relación precio-calidad');

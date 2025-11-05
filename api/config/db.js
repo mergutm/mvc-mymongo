@@ -29,6 +29,7 @@ export const mysqlPool = mysql.createPool({
   password: process.env.MYSQL_PASSWORD || "root",
   database: process.env.MYSQL_DATABASE || "opiniones",
   waitForConnections: true,
+  charset: "utf8mb4",
   connectionLimit: 10,
   queueLimit: 0,
 });
