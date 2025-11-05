@@ -7,4 +7,4 @@ const opinionSchema = new mongoose.Schema({
   fecha: { type: Date, default: Date.now },
 });
 
-export const OpinionMongo = mongoose.model("Opinion", opinionSchema);
+export const OpinionMongo = mongoose.model("Opinion", opinionSchema, "opiniones");

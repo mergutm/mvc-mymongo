@@ -4,5 +4,6 @@ import { listarOpiniones, crearOpinion } from "../controllers/opinionController.
 const router = express.Router();
 router.get("/", listarOpiniones);
 router.post("/", crearOpinion);
+console.log("rutas ok");
 
 export default router;

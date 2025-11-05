@@ -3,7 +3,7 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { connectMongo, mysqlPool, testMySQLConnection } from "./config/db.js";
-//import opinionRoutes from "./routes/opinionRoutes.js"; // habilítalo cuando esté listo
+import opinionRoutes from "./routes/opinionRoutes.js"; // habilítalo cuando esté listo
 
 dotenv.config(); // Cargar variables de entorno
 
@@ -44,7 +44,7 @@ app.get("/health", async (req, res) => {
 });
 
 // Rutas 
-//app.use("/opiniones", opinionRoutes);
+app.use("/opiniones", opinionRoutes);
 
 // Inicio del servidor
 const PORT = process.env.PORT || 3000;

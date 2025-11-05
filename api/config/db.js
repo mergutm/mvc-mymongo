@@ -26,8 +26,8 @@ export async function connectMongo() {
 export const mysqlPool = mysql.createPool({
   host: process.env.MYSQL_HOST || "localhost",
   user: process.env.MYSQL_USER || "root",
-  password: process.env.MYSQL_PASSWORD || "",
-  database: process.env.MYSQL_DATABASE || "testdb",
+  password: process.env.MYSQL_PASSWORD || "root",
+  database: process.env.MYSQL_DATABASE || "opiniones",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,

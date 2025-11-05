@@ -1,4 +1,7 @@
-import { mysqlConn } from "../server.js";
+//import { mysqlConn } from "../server.js";
+import { mysqlPool } from "../config/db.js";
+const mysqlConn = mysqlPool;
+
 
 export async function getOpinionesMySQL() {
   const [rows] = await mysqlConn.query("SELECT * FROM opinion");
