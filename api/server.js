@@ -9,8 +9,7 @@ dotenv.config(); // Cargar variables de entorno
 
 const app = express();
 
-// Middlewares
-
+// Middleware
 app.use(cors());
 app.use(express.json()); // para entender peticiones JSON
 
@@ -21,7 +20,7 @@ await testMySQLConnection();
 // Rutas
 app.get("/", (req, res) => {
     res.send(`
-    <h2>🚀 API corriendo correctamente</h2>
+    <h2> API corriendo correctamente</h2>
     <p>Entorno: <b>${process.env.NODE_ENV || "development"}</b></p>
     <p>Puerto: <b>${process.env.PORT}</b></p>`);
 });
@@ -47,7 +46,7 @@ app.get("/health", async (req, res) => {
 // Rutas 
 //app.use("/opiniones", opinionRoutes);
 
-// 🚀 Inicio del servidor
+// Inicio del servidor
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Servidor escuchando en puerto ${PORT}`);
