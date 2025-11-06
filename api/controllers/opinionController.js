@@ -9,12 +9,30 @@ import { getOpinionesMySQL, addOpinionMySQL } from "../models/opinionMySQL.js";
  *   get:
  *     summary: Obtiene opiniones desde ambas bases de datos
  *     tags: [Opiniones]
+  *     responses:
+ *       200:
+ *         description: Lista de opiniones desde ambas fuentes.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 mysql:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                 mongo:
+ *                   type: array
+ *                   items:
+ *                     type: object 
  */
+
 export async function listarOpiniones(req, res) {
   const mysqlData = await getOpinionesMySQL();
   const mongoData = await OpinionMongo.find();
   res.json({ mysql: mysqlData, mongo: mongoData });
 }
+
 
 
 /**
@@ -23,6 +41,23 @@ export async function listarOpiniones(req, res) {
  *   post:
  *     summary: Crea una nueva opinión en ambas bases de datos
  *     tags: [Opiniones]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required: [usuario, producto, texto]
+ *             properties:
+ *               usuario:
+ *                 type: string
+ *               producto:
+ *                 type: string
+ *               texto:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Opinión agregada exitosamente
  */
 export async function crearOpinion(req, res) {
   const { usuario, producto, texto } = req.body;
@@ -37,8 +72,21 @@ export async function crearOpinion(req, res) {
  * @openapi
  * /opiniones/fuente/{origen}:
  *   get:
- *     summary: Obtiene opiniones desde una fuente específica (mysql, mongo o todas)
+ *     summary: Obtiene opiniones según la fuente especificada (mysql, mongo o todas)
  *     tags: [Opiniones]
+ *     parameters:
+ *       - name: origen
+ *         in: path
+ *         required: true
+ *         description: Fuente de datos
+ *         schema:
+ *           type: string
+ *           enum: [mysql, mongo, todas]
+ *     responses:
+ *       200:
+ *         description: Opiniones filtradas por fuente
+ *       400:
+ *         description: Origen no válido
  */
 
 export async function listarOpinionesPorFuente(req, res) {

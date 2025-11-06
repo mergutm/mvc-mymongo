@@ -192,3 +192,22 @@ MYSQL_DATABASE=opiniones
 MONGO_URI=mongodb://mongo:27017/opiniones
 PORT=3000
 ```
+
+
+
+# Documentación
+
+La forma estándar para documentar APIs REST en Node.js (con Express) es usando Swagger, normalmente a través de:
+
+`swagger-jsdoc` : genera la documentación a partir de comentarios JSDoc en el código.
+`swagger-ui-express` : sirve una interfaz web interactiva (como Postman embebido) para visualizar y probar endpoints.
+
+Para instalarlo
+
+```bash
+npm install swagger-jsdoc swagger-ui-express
+```
+
+### Entrar a la api
+
+http://localhost:3000/api-docs

@@ -3,7 +3,26 @@ import cors from "cors";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 import { connectMongo, mysqlPool, testMySQLConnection } from "./config/db.js";
-import opinionRoutes from "./routes/opinionRoutes.js"; // habilítalo cuando esté listo
+import opinionRoutes from "./routes/opinionRoutes.js";
+
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUi from "swagger-ui-express";
+const swaggerOptions = {
+    definition: {
+        openapi: "3.0.0",
+        info: {
+            title: "API de Opiniones",
+            version: "1.0.0",
+            description: "API para gestionar opiniones en MySQL y MongoDB",
+        },
+    },
+    apis: ["./controllers/*.js"], // comentarios con formato @openapi
+};
+
+// //instancia de swagger
+// const swaggerDocs = swaggerJSDoc(swaggerOptions);
+// app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 dotenv.config(); // Cargar variables de entorno
 
@@ -42,9 +61,17 @@ app.get("/health", async (req, res) => {
         timestamp: new Date().toISOString(),
     });
 });
- 
+
+
+
 // Rutas 
 app.use("/opiniones", opinionRoutes);
+
+ 
+// instancia de swagger
+const swaggerDocs = swaggerJSDoc(swaggerOptions);
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
 
 // Inicio del servidor
 const PORT = process.env.PORT || 3000;
